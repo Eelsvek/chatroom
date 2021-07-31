@@ -10,6 +10,7 @@ export default {}
 
 <style>
 .welcome {
+  padding: 20px 0;
   text-align: center;
 }
 </style>
