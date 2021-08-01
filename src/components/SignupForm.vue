@@ -9,26 +9,31 @@
     <input type="email" required placeholder="email" v-model="email" />
     <input type="password" required placeholder="password" v-model="password" />
     <button type="submit">Sign up</button>
+    <p v-if="error">{{ error }}</p>
   </form>
 </template>
 
 <script>
 import { ref } from 'vue'
+import useSignup from '@/hooks/useSignup'
 
 export default {
   setup() {
+    const { error, signup } = useSignup()
+
     const displayName = ref('')
     const email = ref('')
     const password = ref('')
 
-    const handleSubmit = () => {
-      console.log('form', displayName.value, email.value, password.value)
+    const handleSubmit = async () => {
+      await signup(email.value, password.value, displayName.value)
     }
 
     return {
       handleSubmit,
       displayName,
       email,
+      error,
       password,
     }
   },

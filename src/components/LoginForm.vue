@@ -8,19 +8,27 @@
 
 <script>
 import { ref } from 'vue'
+import useLogin from '@/hooks/useLogin'
 
 export default {
-  setup() {
+  setup(_, context) {
+    const { error, login } = useLogin()
+
     const email = ref('')
     const password = ref('')
 
-    const handleSubmit = () => {
-      console.log('form', email.value, password.value)
+    const handleSubmit = async () => {
+      await login(email.value, password.value)
+
+      if (!error.value) {
+        context.emit('login')
+      }
     }
 
     return {
       handleSubmit,
       email,
+      error,
       password,
     }
   },
